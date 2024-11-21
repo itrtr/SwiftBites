@@ -21,21 +21,31 @@ struct IngredientsScreen: View {
     }
     
     var body: some View {
-        NavigationStack {
-            SearchView(searchedText: $searchedText) // Search View
-                .navigationTitle("Ingredients")
-            
-            List(filteredIngredients) { ingredient in
-                NavigationLink {
-                    
-                } label: {
-                    Text(ingredient.name)
+        VStack {
+            NavigationStack {
+                SearchView(searchedText: $searchedText) // Search View
+                List(filteredIngredients) { ingredient in
+                    NavigationLink {
+                        
+                    } label: {
+                        Text(ingredient.name)
+                    }
+                }
+                .listStyle(.plain)
+                
+                Spacer()
+            }
+        }
+        .navigationTitle("Ingredients")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        //NavigationLink()
+                    }) {
+                        Image(systemName: "plus")
+                    }
                 }
             }
-            .listStyle(.plain)
-            
-            Spacer()
-        }
     }
 }
 
