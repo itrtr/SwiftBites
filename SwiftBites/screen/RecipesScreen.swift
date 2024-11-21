@@ -56,9 +56,9 @@ struct RecipesScreen: View {
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        // Add view to add new Recipe
-                    }) {
+                    NavigationLink {
+                        AddRecipeView()
+                    } label: {
                         Image(systemName: "plus")
                     }
                 }

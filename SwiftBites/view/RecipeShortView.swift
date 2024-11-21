@@ -1,10 +1,11 @@
 import SwiftUI
 
 struct RecipeShortView: View {
+    @State private var images: [Image] = []
     var recipe: Recipe
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            ImageScrollerView(autoScroll: false)
+            ImageSelectionView(images: $images)
             Text(recipe.title)
                 .font(.headline)
             Text(recipe.detail)

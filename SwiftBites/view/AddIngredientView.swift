@@ -17,18 +17,26 @@ struct AddIngredientView: View {
     }
     
     var body: some View {
-        VStack() {
+        VStack(alignment: .center, spacing: 20) {
+            Spacer()
+                .frame(height: 10)
+            
             HStack {
                 Spacer()
-                TextField("Ingredient:", text: $name)
+                    .frame(width: 15)
+                
+                TextField("name", text: $name)
                     .textFieldStyle(.plain)
                     .padding()
                     .overlay(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color.teal)
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black)
                     )
+                
                 Spacer()
+                    .frame(width: 15)
             }
+            
             Spacer()
         }
         .toolbar {
@@ -48,16 +56,7 @@ struct AddIngredientView: View {
                         Text("Save")
                     }
                 }
-
             }
         }
     }
 }
-
-
-//
-//#Preview {
-////    AddIngredientView(item: .constant(Ingredient(name: "Apple")))
-//    AddIngredientView()
-//        .modelContainer(for: [Ingredient.self])
-//}

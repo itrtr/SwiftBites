@@ -9,6 +9,9 @@ import Foundation
 
 struct Constants {
     
+    static let emptyImageSetHeight: CGFloat = 10
+    static let imageSetHeight: CGFloat = 150
+    
     struct IngredientConstants {
         static let initialIngredientList: [Ingredient] = [
             Ingredient(name: "Salt"),
