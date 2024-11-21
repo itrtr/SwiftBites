@@ -21,7 +21,7 @@ struct ImageScrollerView: View {
                         Image(images[imageIndex])
                             .resizable()
                             .scaledToFill()
-                            .frame(height: 200)
+                            .frame(height: 150)
                             .cornerRadius(10)
                             .clipped()
                             .tag(imageIndex)

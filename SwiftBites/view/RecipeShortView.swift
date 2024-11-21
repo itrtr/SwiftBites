@@ -4,6 +4,7 @@ struct RecipeShortView: View {
     var recipe: Recipe
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
+            ImageScrollerView(autoScroll: false)
             Text(recipe.title)
                 .font(.headline)
             Text(recipe.detail)

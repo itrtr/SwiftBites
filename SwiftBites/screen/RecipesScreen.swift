@@ -36,9 +36,12 @@ struct RecipesScreen: View {
                 SearchView(searchedText: $searchedText) // Search View
                 
                 List(sortedAndFilteredRecipes, id: \.self) { recipe in
-                    NavigationLink(destination: RecipeDetailView(recipe: recipe)) {
-                        RecipeShortView(recipe: recipe) // Recipe Short View
+                    NavigationLink {
+                        RecipeDetailView(recipe: recipe)
+                    } label: {
+                        RecipeShortView(recipe: recipe)
                     }
+                    // TODO:: Remove chevron from the RecipeShortView
                 }
                 .listStyle(.plain)
             }

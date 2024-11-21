@@ -1,15 +1,9 @@
-//
-//  IngredientsScreen.swift
-//  SwiftBites
-//
-//  Created by Singh, Pankaj on 17/11/24.
-//
-
 import SwiftUI
 
 struct IngredientsScreen: View {
     @State var searchedText: String = ""
     @State private var ingredients: [Ingredient] = Constants.IngredientConstants.initialIngredientList
+    @State private var selectedIngredientIndex: Int = 0
     
     var filteredIngredients: [Ingredient] {
         if searchedText.isEmpty {
@@ -21,31 +15,29 @@ struct IngredientsScreen: View {
     }
     
     var body: some View {
-        VStack {
-            NavigationStack {
-                SearchView(searchedText: $searchedText) // Search View
+        NavigationStack {
+            VStack {
+                SearchView(searchedText: $searchedText)
                 List(filteredIngredients) { ingredient in
                     NavigationLink {
-                        
+                        AddIngredientView(name: ingredient.name)
                     } label: {
                         Text(ingredient.name)
                     }
                 }
                 .listStyle(.plain)
-                
-                Spacer()
             }
-        }
-        .navigationTitle("Ingredients")
+            .navigationTitle("Ingredients")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: {
-                        //NavigationLink()
-                    }) {
+                    NavigationLink {
+                        AddIngredientView()
+                    } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
+        }
     }
 }
 
