@@ -31,18 +31,22 @@ struct AddRecipeView: View {
                 
                 Section {
                     TextField("Enter recipe name", text: $recipeName)
-                        .font(.caption)
+                        .font(.subheadline)
+                        .autocorrectionDisabled()
+                        .padding(.leading, 5)
                 } header: {
-                    Text("NAME")
+                    Text("NAME").font(.headline)
                 }.listRowInsets(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 15))
                 
                 Section {
                     ZStack(alignment: .topLeading) {
                         if summary.isEmpty {
                             Text("Enter summary of the recipe here...")
-                                .font(.caption)
-                                .foregroundColor(.secondary.opacity(0.7))
-                                .padding(8)
+                                .font(.subheadline)
+                                .autocorrectionDisabled()
+                                .foregroundColor(.secondary.opacity(0.5))
+                                .padding(.top, 10)
+                                .padding(.leading, 8)
                         }
                         
                         TextEditor(text: $summary)
@@ -52,7 +56,7 @@ struct AddRecipeView: View {
                             .frame(minHeight: 50)
                     }
                 } header: {
-                    Text("SUMMARY")
+                    Text("SUMMARY").font(.headline)
                 }.listRowInsets(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 15))
                 
                 Section {
@@ -84,17 +88,18 @@ struct AddRecipeView: View {
                         
                     }
                 } header: {
-                    Text("INGREDIENTS")
-                        .font(.headline)
+                    Text("INGREDIENTS").font(.headline)
                 }.listRowInsets(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 15))
                 
                 Section {
                     ZStack(alignment: .topLeading) {
                         if instructions.isEmpty {
                             Text("Enter recipe instructions here...")
-                                .font(.caption)
-                                .foregroundColor(.secondary.opacity(0.7))
-                                .padding(8)
+                                .font(.subheadline)
+                                .autocorrectionDisabled()
+                                .foregroundColor(.secondary.opacity(0.5))
+                                .padding(.top, 10)
+                                .padding(.leading, 8)
                         }
                         
                         TextEditor(text: $instructions)
@@ -104,7 +109,7 @@ struct AddRecipeView: View {
                             .frame(minHeight: 50)
                     }
                 } header: {
-                    Text("INSTRUCTIONS")
+                    Text("INSTRUCTIONS").font(.headline)
                         .foregroundColor(.secondary)
                 }.listRowInsets(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 15))
                 
