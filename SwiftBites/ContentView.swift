@@ -1,7 +1,9 @@
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     @State private var selectedScreen: ScreenEnum = .RecipesScreen
+    @Query var ingredients: [Ingredient]
     
     var body: some View {
         TabView(selection: $selectedScreen) {
@@ -17,7 +19,7 @@ struct ContentView: View {
                 }
                 .tag(ScreenEnum.CategoriesScreen)
             
-            IngredientsScreen()
+            IngredientsScreen(ingredients: ingredients)
                 .tabItem {
                     Label("Ingredients", systemImage: "carrot.fill")
                 }
@@ -36,4 +38,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(for: [Ingredient.self, Recipe.self, Tag.self])
 }

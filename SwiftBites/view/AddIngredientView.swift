@@ -1,8 +1,11 @@
 import SwiftUI
 
 struct AddIngredientView: View {
-    @Environment(\.dismiss) private var dismiss
+    private var previousName: String
     @State var name: String
+    
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
     
     var isValid: Bool {
         !name.isEmpty
@@ -10,6 +13,7 @@ struct AddIngredientView: View {
     
     init(name: String = "") {
         self.name = name
+        self.previousName = name
     }
     
     var body: some View {
@@ -31,7 +35,14 @@ struct AddIngredientView: View {
             if isValid {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
-                        // Update the ingredient
+                        if name == previousName { dismiss() } // Do not do anything if there is no ingredient change
+                        context.delete(Ingredient(name: previousName))
+                        context.insert(Ingredient(name: name))
+                        do {
+                            try context.save()
+                        } catch {
+                            // Swallow
+                        }
                         dismiss()
                     }) {
                         Text("Save")
@@ -43,7 +54,10 @@ struct AddIngredientView: View {
     }
 }
 
-#Preview {
-//    AddIngredientView(item: .constant(Ingredient(name: "Apple")))
-    AddIngredientView()
-}
+
+//
+//#Preview {
+////    AddIngredientView(item: .constant(Ingredient(name: "Apple")))
+//    AddIngredientView()
+//        .modelContainer(for: [Ingredient.self])
+//}
