@@ -9,12 +9,14 @@ import SwiftUI
 
 struct SearchView: View {
     @Binding var searchedText: String
+    var placeholder: String = "Search..."
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.gray)
-            TextField("Search recipes...", text: $searchedText)
+            TextField(placeholder, text: $searchedText)
                 .textFieldStyle(.plain)
+                .autocorrectionDisabled()
             
             if !searchedText.isEmpty {
                 Button(action: {

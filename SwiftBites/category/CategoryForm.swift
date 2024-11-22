@@ -25,17 +25,6 @@ struct CategoryForm: View {
                     TextField("Name", text: $name)
                         .autocorrectionDisabled()
                 }
-                if case .edit = mode {
-                    Section {
-                        Button(action: deleteCategory) {
-                            Label("Delete Category", systemImage: "trash")
-                                .foregroundStyle(.red)
-                                .frame(maxWidth: .infinity, maxHeight: 50)
-                                .background(Color.red.opacity(0.1))
-                                .cornerRadius(8)
-                        }
-                    }
-                }
             }
             .navigationTitle(getNavigationBarTitle())
             .navigationBarTitleDisplayMode(.inline)
@@ -49,6 +38,15 @@ struct CategoryForm: View {
             .onAppear() {
                 if case let .edit(category) = mode {
                     name = category.name
+                }
+            }
+            
+            if case .edit = mode {
+                Section {
+                    Button(action: deleteCategory) {
+                        Label("Delete Category", systemImage: "trash")
+                            .foregroundStyle(.red)
+                    }
                 }
             }
             
@@ -95,6 +93,8 @@ struct CategoryForm: View {
         } catch {
             print("Error deleting category: \(error)")
         }
+        
+        dismiss()
     }
 }
 
