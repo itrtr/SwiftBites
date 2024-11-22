@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RecipeShortView: View {
-    @State private var images: [Image] = []
+    @State var images: [Image] = []
     var recipe: Recipe
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -14,6 +14,16 @@ struct RecipeShortView: View {
             TagView(tags: recipe.tags).padding(.vertical, 5)
         }
         .padding(.vertical, 4)
+        .onAppear() {
+            images = getRecipeImages()
+        }
+    }
+    
+    private func getRecipeImages() -> [Image] {
+        for imageData in recipe.imageData {
+            images.append(Image(uiImage: UIImage(data: imageData)!))
+        }
+        return images
     }
 }
 

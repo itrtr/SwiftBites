@@ -1,5 +1,5 @@
 //
-//  Category.swift
+//  Category.swift - Represents the category for SwiftBite
 //  SwiftBites
 //
 //  Created by Singh, Pankaj on 21/11/24.

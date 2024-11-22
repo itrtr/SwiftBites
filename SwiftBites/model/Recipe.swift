@@ -10,8 +10,8 @@ final class Recipe {
     var servingTime: Int
     
     @Relationship(deleteRule: .noAction, inverse: \Tag.recipes) var tags: [Tag]
-    @Relationship(deleteRule: .noAction) var ingredients: [Ingredient]
-    @Relationship(deleteRule: .noAction, inverse: \Category.recipes) var category: Category?
+    @Relationship(deleteRule: .nullify, inverse: \Ingredient.recipes) var ingredients: [Ingredient]
+    @Relationship(deleteRule: .nullify, inverse: \Category.recipes) var category: Category?
     
     @Relationship(deleteRule: .cascade) var imageData: [Data] // Only delete the images when this recipe is deleted
     
@@ -31,6 +31,6 @@ final class Recipe {
         self.tags = tags
         self.imageData = imageData
         self.category = category
-        self.ingredients = []
+        self.ingredients = ingredients
     }
 }

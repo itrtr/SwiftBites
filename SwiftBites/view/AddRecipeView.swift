@@ -10,6 +10,7 @@ struct AddRecipeView: View {
     @State private var selectedFruit: String = "banana"
     
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
     
     init(images: [Image] = [], recipeName: String = "", summary: String = "", ingredients: [Ingredient] = [], instructions: String = "") {
         self.images = images
@@ -118,7 +119,22 @@ struct AddRecipeView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        // Save the recipe
+                        // Create new object of Recipe
+                        let recipe = Recipe(title: recipeName,
+                                            detail: summary,
+                                            servingCount: 4,
+                                            servingTime: 90,
+                                            tags: [],
+                                            imageData: images.compactMap {$0.saveAsData()},
+                                            category: Category(name: "Brekfast"),
+                                            ingredients: ingredients)
+                        context.insert(recipe)
+                        do {
+                            try context.save()
+                        } catch {
+                            // Swallow
+                        }
+                        
                         dismiss()
                     } label: {
                         Text("Save")
@@ -131,4 +147,5 @@ struct AddRecipeView: View {
 
 #Preview {
     AddRecipeView()
+        .modelContainer(for: [Category.self, Recipe.self, Ingredient.self])
 }
