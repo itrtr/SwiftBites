@@ -33,7 +33,8 @@ struct RecipeCell: View {
             } else {
                 Image(systemName: "photo")
                     .resizable()
-                    .frame(maxWidth: .infinity)
+                    .scaledToFit()
+                    //.frame(maxWidth: .infinity) // Enable if we need to have same width as other photos
                     .frame(height: 130)
                     .foregroundColor(.gray)
             }

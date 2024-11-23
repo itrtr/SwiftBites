@@ -48,9 +48,8 @@ struct IngredientForm: View {
                         Label("Delete Ingredient", systemImage: "trash")
                             .foregroundStyle(.red)
                     }
-                }
+                }.padding(.bottom, 20)
             }
-            
         }
     }
     
