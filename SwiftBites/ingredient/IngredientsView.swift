@@ -18,8 +18,7 @@ struct IngredientsView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isNavigatingToForm: Bool = false
     
-    // TODO:: Add use of #Predicate
-    // Implement a search bar using a #Predicate to search ingredients by name.
+    
     private var filteredIngredients: [Ingredient] {
         if searchText.isEmpty {
             return ingredients

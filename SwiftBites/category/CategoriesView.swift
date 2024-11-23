@@ -10,11 +10,9 @@ import SwiftData
 
 struct CategoriesView: View {
     @State private var searchText: String = ""
-    @Environment(\.modelContext) private var modelContext // TODO:: Remove
+    @Environment(\.modelContext) private var modelContext
     @Query var categories: [Category]
     
-    // TODO:: Add use of #Predicate
-    // Implement a search bar using a #Predicate to search categories by name.
     private var filteredCategories: [Category] {
         if searchText.isEmpty {
             return categories
