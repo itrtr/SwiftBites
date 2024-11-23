@@ -28,7 +28,7 @@ struct TagView: View {
         HStack {
             TagSubView(imageName: "tag", textName: categoryName)
             TagSubView(imageName: "clock", textName: String(servingTime))
-            TagSubView(imageName: "person", textName: String(servingTime))
+            TagSubView(imageName: "person", textName: String(servingSize))
         }
     }
 }

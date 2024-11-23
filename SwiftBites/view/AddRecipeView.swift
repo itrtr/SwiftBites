@@ -120,14 +120,14 @@ struct AddRecipeView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         // Create new object of Recipe
-                        let recipe = Recipe(title: recipeName,
-                                            detail: summary,
-                                            servingCount: 4,
-                                            servingTime: 90,
-                                            imageData: images.compactMap {$0.saveAsData()},
-                                            category: Category(name: "Brekfast"),
-                                            ingredients: ingredients)
-                        context.insert(recipe)
+//                        let recipe = Recipe(title: recipeName,
+//                                            detail: summary,
+//                                            servingCount: 4,
+//                                            servingTime: 90,
+//                                            imageData: images.compactMap {$0.saveAsData()},
+//                                            category: Category(name: "Brekfast"),
+//                                            ingredients: ingredients)
+//                        context.insert(recipe)
                         do {
                             try context.save()
                         } catch {

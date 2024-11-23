@@ -35,8 +35,3 @@ struct ContentView: View {
         }
     }
 }
-
-#Preview {
-    ContentView()
-        .modelContainer(for: [Ingredient.self, Recipe.self, Category.self])
-}

@@ -2,6 +2,19 @@ import Foundation
 import SwiftUI
 import SwiftData
 
+
+@Model
+final class IngredientMapping: Identifiable {
+    var id = UUID()
+    var ingredient: Ingredient
+    var quantity: String
+    
+    init(ingredient: Ingredient, quantity: String) {
+        self.ingredient = ingredient
+        self.quantity = quantity
+    }
+}
+
 @Model
 final class Recipe {
     var title: String
@@ -9,12 +22,10 @@ final class Recipe {
     var instructions: String
     var servingCount: Int
     var servingTime: Int
+    @Relationship(deleteRule: .cascade) var ingredientMappings: [IngredientMapping]
+    var category: Category?
     
-    //@Relationship(deleteRule: .noAction, inverse: \Tag.recipes) var tags: [Tag]
-    @Relationship(deleteRule: .nullify, inverse: \Ingredient.recipes) var ingredients: [Ingredient]
-    @Relationship(deleteRule: .nullify, inverse: \Category.recipes) var category: Category?
-    
-    @Relationship(deleteRule: .cascade) var imageData: [Data] // Only delete the images when this recipe is deleted
+    @Relationship(deleteRule: .cascade) var imageData: [Data]
     
     init(title: String,
          detail: String,
@@ -22,7 +33,7 @@ final class Recipe {
          servingTime: Int = 0,
          imageData: [Data] = [],
          category: Category? = nil,
-         ingredients: [Ingredient] = [],
+         ingredientMappings: [IngredientMapping] = [],
          instructions: String = "") {
         
         self.title = title
@@ -31,7 +42,7 @@ final class Recipe {
         self.servingTime = servingTime
         self.imageData = imageData
         self.category = category
-        self.ingredients = ingredients
+        self.ingredientMappings = ingredientMappings
         self.instructions = instructions
     }
 }

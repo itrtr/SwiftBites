@@ -14,6 +14,10 @@ struct Constants {
     // Recipe related constants
     static let DEFAULT_RECIPE_TITLE: String = "Margherita Pizza"
     static let DEFAULT_RECIPE_SUMMARY: String = "Declicious blend of fresh basil, mozzarella, and tomato on crispy crust."
+    static let DEFAULT_RECIPE_INSTRUCTIONS: String = """
+    Step 1: Take all the ingredients for the recipe
+    Step 2: Wash them properly to clean them
+    """
     static let DEFAULT_SERVING_SIZE_DIFF: Int = 1
     static let DEFAULT_SERVING_TIME_DIFF: Int = 5
     

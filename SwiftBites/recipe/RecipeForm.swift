@@ -16,10 +16,11 @@ struct RecipeForm: View {
     @State private var recipeName: String = ""
     @State private var instructions: String = ""
     @State private var summary: String = ""
-    @State private var ingredients: [Ingredient] = []
+    @State private var ingredientMappings: [IngredientMapping] = []
     @State private var selectedCategory: Category = Constants.NONE_CATEGORY
     @State private var servingSize: Int = 1
     @State private var servingTime: Int = 5
+    @State private var ingredientDetail: String = ""
     
     @State private var shouldLoadIngredientSheet: Bool = false
     
@@ -56,7 +57,7 @@ struct RecipeForm: View {
             }
             servingSize = recipe.servingCount
             servingTime = recipe.servingTime
-            ingredients = recipe.ingredients
+            ingredientMappings = recipe.ingredientMappings
             instructions = recipe.instructions
             selectedCategory = recipe.category ?? Constants.NONE_CATEGORY
         }
@@ -80,7 +81,7 @@ struct RecipeForm: View {
             recipe.servingTime = servingTime
             recipe.imageData = getImageData(images: images)
             recipe.category = selectedCategory
-            recipe.ingredients = ingredients
+            recipe.ingredientMappings = ingredientMappings
             recipe.instructions = instructions
             selectedCategory.recipes.append(recipe)
         } else {
@@ -90,7 +91,7 @@ struct RecipeForm: View {
                                    servingTime: servingTime,
                                    imageData: getImageData(images: images),
                                    category: selectedCategory,
-                                   ingredients: ingredients,
+                                   ingredientMappings: ingredientMappings,
                                    instructions: instructions)
             selectedCategory.recipes.append(newRecipe)
             modelContext.insert(newRecipe)
@@ -103,6 +104,16 @@ struct RecipeForm: View {
             // Swallow
         }
         
+        dismiss()
+    }
+    
+    private func deleteRecipe(recipe: Recipe) {
+        modelContext.delete(recipe)
+        do {
+            try modelContext.save()
+        } catch {
+            // Swallow
+        }
         dismiss()
     }
     
@@ -174,7 +185,34 @@ struct RecipeForm: View {
                 
                 // Section for ingredients of this recipe
                 Section {
-                    IngredientsShortView(ingredients: ingredients)
+                    //IngredientsShortView(ingredients: ingredients)
+                    if (ingredientMappings.isEmpty) {
+                        ContentNotFoundView(labelText: "No Ingredients", descriptionText: "Please add an ingredient to see here", systemImageName: "carrot")
+                    }
+                    List {
+                        ForEach(ingredientMappings) { ingredientMapping in
+                            HStack {
+                                Text(ingredientMapping.ingredient.name)
+                                TextField("Quantity", text: Binding(
+                                    get: { ingredientMapping.quantity },
+                                    set: { newValue in
+                                        if let index = ingredientMappings.firstIndex(where: { $0.id == ingredientMapping.id }) {
+                                            ingredientMappings[index].quantity = newValue
+                                        }
+                                    }
+                                ))
+                            }
+                        }
+                    }
+                    Button {
+                        shouldLoadIngredientSheet = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "carrot").foregroundStyle(.primary)
+                            Text("Add Ingredient").foregroundStyle(.primary)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } header: {
                     Text("INGREDIENTS").font(.headline).padding(.bottom, 5)
                 }
@@ -185,7 +223,7 @@ struct RecipeForm: View {
                 Section {
                     ZStack(alignment: .topLeading) {
                         if instructions.isEmpty {
-                            Text("Enter recipe instructions here...")
+                            Text(Constants.DEFAULT_RECIPE_INSTRUCTIONS)
                                 .font(.subheadline)
                                 .autocorrectionDisabled()
                                 .foregroundColor(.secondary.opacity(0.5))
@@ -197,16 +235,39 @@ struct RecipeForm: View {
                             .font(.subheadline)
                             .disableAutocorrection(true)
                             .background(Color.clear)
-                            .frame(minHeight: 50)
+                            .frame(minHeight: 120)
                     }
                 } header: {
                     Text("INSTRUCTIONS").font(.headline).padding(.bottom, 5)
                         .foregroundColor(.secondary)
                 }.listRowInsets(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 15))
                 
+                // Optional delete button
+                if case .edit(let recipe) = mode {
+                    Section {
+                        Button {
+                            deleteRecipe(recipe: recipe)
+                        } label: {
+                            HStack {
+                                Image(systemName: "trash").foregroundStyle(.red)
+                                Text("Delete recipe").foregroundStyle(.red)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                }
             }
             .onAppear { loadInitialData() }
             .navigationTitle("Add Recipe")
+            .sheet(isPresented: $shouldLoadIngredientSheet) {
+                NavigationStack {
+                    IngredientsView(onItemSelected: { selectedIngredient in
+                        print("Adding ingredient: \(selectedIngredient.name) in list")
+                        ingredientMappings.append(IngredientMapping(ingredient: selectedIngredient, quantity: ""))
+                    })
+                }
+                .presentationDetents([.medium])
+            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
