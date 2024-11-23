@@ -52,7 +52,7 @@ struct RecipesView: View {
                     } label: {
                         VStack(alignment: .leading) {
                             RecipeCell(recipe: recipe)
-                            TagView(categoryName: recipe.category!.name, servingSize: recipe.servingCount, servingTime: recipe.servingTime)
+                            TagView(categoryName: recipe.category?.name ?? "None", servingSize: recipe.servingCount, servingTime: recipe.servingTime)
                         }
                     }
                 }
