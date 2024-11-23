@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Counter: View {
+struct IncrementDecrementCounterView: View {
     @Binding var counterResult: Int
     var counterText: String
     var counterFrequency: Int

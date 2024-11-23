@@ -172,11 +172,11 @@ struct RecipeForm: View {
                 // Section for serving count and serving time
                 Section {
                     // Serving and Time
-                    Counter(counterResult: $servingSize,
+                    IncrementDecrementCounterView(counterResult: $servingSize,
                             counterText: "Servings: \(servingSize) person",
                             counterFrequency: Constants.DEFAULT_SERVING_SIZE_DIFF)
                     
-                    Counter(counterResult: $servingTime,
+                    IncrementDecrementCounterView(counterResult: $servingTime,
                             counterText: "Servings: \(servingTime) minutes",
                             counterFrequency: Constants.DEFAULT_SERVING_TIME_DIFF)
                     

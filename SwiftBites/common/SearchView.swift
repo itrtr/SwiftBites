@@ -1,10 +1,3 @@
-//
-//  SearchView.swift
-//  SwiftBites
-//
-//  Created by Singh, Pankaj on 17/11/24.
-//
-
 import SwiftUI
 
 struct SearchView: View {
@@ -36,8 +29,3 @@ struct SearchView: View {
         .padding()
     }
 }
-
-//
-//#Preview {
-//    SearchView()
-//}

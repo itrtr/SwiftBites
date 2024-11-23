@@ -25,6 +25,7 @@ struct Constants {
     static let emptyImageSetHeight: CGFloat = 10
     static let imageSetHeight: CGFloat = 150
     
+    // Used for testing
     struct IngredientConstants {
         static let initialIngredientList: [Ingredient] = [
             Ingredient(name: "Salt"),
