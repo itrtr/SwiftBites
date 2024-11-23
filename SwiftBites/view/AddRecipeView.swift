@@ -124,7 +124,6 @@ struct AddRecipeView: View {
                                             detail: summary,
                                             servingCount: 4,
                                             servingTime: 90,
-                                            tags: [],
                                             imageData: images.compactMap {$0.saveAsData()},
                                             category: Category(name: "Brekfast"),
                                             ingredients: ingredients)

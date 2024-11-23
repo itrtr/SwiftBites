@@ -1,9 +1,19 @@
-import SwiftUI
+//
+//  RecipesView.swift
+//  SwiftBites
+//
+//  Created by Singh, Pankaj on 23/11/24.
+//
 
-struct RecipesScreen: View {
-    @State var recipes: [Recipe]
+import SwiftUI
+import SwiftData
+
+struct RecipesView: View {
+    @Query var recipes: [Recipe]
     @State var option: RecipeSortOption = .name
     @State var searchedText: String = ""
+    @State var isNavigatingToForm: Bool = false
+    @State var formMode: RecipeFormMode = .add
     
     var filteredRecipes: [Recipe] {
         if searchedText.isEmpty {
@@ -36,12 +46,15 @@ struct RecipesScreen: View {
                 SearchView(searchedText: $searchedText) // Search View
                 
                 List(sortedAndFilteredRecipes, id: \.self) { recipe in
-                    NavigationLink {
-                        RecipeDetailView(recipe: recipe)
+                    Button {
+                        isNavigatingToForm = true
+                        formMode = .edit(recipe)
                     } label: {
-                        RecipeShortView(recipe: recipe)
+                        VStack(alignment: .leading) {
+                            RecipeCell(recipe: recipe)
+                            TagView(categoryName: recipe.category!.name, servingSize: recipe.servingCount, servingTime: recipe.servingTime)
+                        }
                     }
-                    // TODO:: Remove chevron from the RecipeShortView
                 }
                 .listStyle(.plain)
             }
@@ -57,33 +70,15 @@ struct RecipesScreen: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
-                        AddRecipeView()
+                        RecipeForm(mode: .add)
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
+            .navigationDestination(isPresented: $isNavigatingToForm) {
+                RecipeForm(mode: formMode)
+            }
         }
     }
 }
-
-//#Preview {
-//    let recipes = [
-//        Recipe(title: "Classic Margherita Pizza", detail: "A simple yet delicious pizza with tomato, mozzarella, basil, and olive oil.", servingCount: 4, servingTime: 120, tags: [
-//            Tag(image: "star", text: "Featured"),
-//            Tag(image: "tag", text: "Sale"),
-//            Tag(image: "flame", text: "Hot")
-//        ]),
-//        Recipe(title: "Spaghetti Carbonara", detail: "A classic Italian pasta dish made with eggs, cheese, pacetta, and pepper.", servingCount: 3, servingTime: 90, tags: [
-//            Tag(image: "star", text: "Featured"),
-//            Tag(image: "tag", text: "Sale"),
-//            Tag(image: "flame", text: "Hot")
-//        ]),
-//        Recipe(title: "ASpaghetti Carbonara", detail: "A classic Italian pasta dish made with eggs, cheese, pacetta, and pepper.", servingCount: 5, servingTime: 100, tags: [
-//            Tag(image: "star", text: "Featured"),
-//            Tag(image: "tag", text: "Sale"),
-//            Tag(image: "flame", text: "Hot")
-//        ])
-//    ]
-//    RecipesScreen(recipes: recipes)
-//}

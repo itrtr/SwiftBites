@@ -6,10 +6,11 @@ import SwiftData
 final class Recipe {
     var title: String
     var detail: String
+    var instructions: String
     var servingCount: Int
     var servingTime: Int
     
-    @Relationship(deleteRule: .noAction, inverse: \Tag.recipes) var tags: [Tag]
+    //@Relationship(deleteRule: .noAction, inverse: \Tag.recipes) var tags: [Tag]
     @Relationship(deleteRule: .nullify, inverse: \Ingredient.recipes) var ingredients: [Ingredient]
     @Relationship(deleteRule: .nullify, inverse: \Category.recipes) var category: Category?
     
@@ -19,18 +20,18 @@ final class Recipe {
          detail: String,
          servingCount: Int = 0,
          servingTime: Int = 0,
-         tags: [Tag] = [],
          imageData: [Data] = [],
          category: Category? = nil,
-         ingredients: [Ingredient] = []) {
+         ingredients: [Ingredient] = [],
+         instructions: String = "") {
         
         self.title = title
         self.detail = detail
         self.servingCount = servingCount
         self.servingTime = servingTime
-        self.tags = tags
         self.imageData = imageData
         self.category = category
         self.ingredients = ingredients
+        self.instructions = instructions
     }
 }

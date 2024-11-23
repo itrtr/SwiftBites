@@ -9,6 +9,15 @@ import Foundation
 
 struct Constants {
     
+    static let NONE_CATEGORY: Category = .init(name: "None")
+    
+    // Recipe related constants
+    static let DEFAULT_RECIPE_TITLE: String = "Margherita Pizza"
+    static let DEFAULT_RECIPE_SUMMARY: String = "Declicious blend of fresh basil, mozzarella, and tomato on crispy crust."
+    static let DEFAULT_SERVING_SIZE_DIFF: Int = 1
+    static let DEFAULT_SERVING_TIME_DIFF: Int = 5
+    
+    
     static let emptyImageSetHeight: CGFloat = 10
     static let imageSetHeight: CGFloat = 150
     

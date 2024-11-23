@@ -9,12 +9,14 @@ import Foundation
 import SwiftData
 
 @Model
-final class Category {
-    var name: String
+final class Category: Identifiable {
+    var id: UUID
+    @Attribute(.unique) var name: String
     
     var recipes: [Recipe]
     
-    init(name: String, recipes: [Recipe] = []) {
+    init(id: UUID = .init(), name: String, recipes: [Recipe] = []) {
+        self.id = id
         self.name = name
         self.recipes = recipes
     }

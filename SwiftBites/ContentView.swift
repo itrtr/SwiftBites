@@ -3,24 +3,23 @@ import SwiftData
 
 struct ContentView: View {
     @State private var selectedScreen: ScreenEnum = .RecipesScreen
-    @Query var ingredients: [Ingredient]
-    @Query var recipes: [Recipe]
     
     var body: some View {
         TabView(selection: $selectedScreen) {
-            RecipesScreen(recipes: recipes)
+            
+            RecipesView()
                 .tabItem {
-                    Label("Recipes", systemImage: "fork.knife.circle.fill")
+                    Label("All Recipes", systemImage: "book.circle.fill")
                 }
                 .tag(ScreenEnum.RecipesScreen)
             
-            CategoriesScreen()
+            CategoriesView()
                 .tabItem {
                     Label("Categories", systemImage: "bookmark.circle")
                 }
                 .tag(ScreenEnum.CategoriesScreen)
             
-            IngredientsScreen(ingredients: ingredients)
+            IngredientsView()
                 .tabItem {
                     Label("Ingredients", systemImage: "carrot.fill")
                 }
@@ -39,5 +38,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: [Ingredient.self, Recipe.self, Tag.self, Category.self])
+        .modelContainer(for: [Ingredient.self, Recipe.self, Category.self])
 }

@@ -10,7 +10,7 @@ import SwiftData
 
 struct CategoriesView: View {
     @State private var searchText: String = ""
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.modelContext) private var modelContext // TODO:: Remove
     @Query var categories: [Category]
     
     // TODO:: Add use of #Predicate
@@ -24,6 +24,7 @@ struct CategoriesView: View {
     
     var body: some View {
         NavigationStack {
+            //Text("\(categories.count)")
             // We should show the search bar always unless the main category is empty
             if !categories.isEmpty {
                 SearchView(searchedText: $searchText, placeholder: "Search Categories...")
@@ -42,17 +43,16 @@ struct CategoriesView: View {
                 }
             } else {
                 VStack {
-                    ForEach(filteredCategories) { category in
-                        NavigationLink(destination: CategoryForm(mode: .edit(category))) {
-                            Text(category.name)
-                        }
+                    List(filteredCategories) { category in
+                        CategorySection(recipes: category.recipes, category: category)
                     }
+                    .listStyle(.plain)
                 }
                 .navigationTitle("Categories")
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink(destination: CategoryForm(mode: .add)) {
-                            Image(systemName: "plus.circle").font(.headline)
+                            Image(systemName: "plus").font(.headline)
                         }
                     }
                 }
@@ -65,6 +65,7 @@ struct CategoriesView: View {
         }
     }
     
+    // TODO:: Remove
     private func clearCategories() {
         for category in categories {
             modelContext.delete(category)
@@ -76,9 +77,4 @@ struct CategoriesView: View {
             print("Error clearing notes: \(error)")
         }
     }
-}
-
-#Preview {
-    CategoriesView()
-        .modelContainer(for: [Category.self])
 }
