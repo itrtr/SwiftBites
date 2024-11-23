@@ -16,13 +16,6 @@ struct RecipeCell: View {
                                     .resizable()
                                     .scaledToFill()
                                     .tag(index)
-                            } else {
-                                // Fallback for invalid image data
-                                Image(systemName: "photo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .foregroundColor(.gray)
-                                    .tag(index)
                             }
                         }
                     }
@@ -37,9 +30,14 @@ struct RecipeCell: View {
                         }
                     }
                 }
+            } else {
+                Image(systemName: "photo")
+                    .resizable()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 130)
+                    .foregroundColor(.gray)
             }
 
-            // Title and detail below the carousel
             Text(recipe.title)
                 .font(.headline)
                 .padding(.top, 5)
@@ -47,7 +45,6 @@ struct RecipeCell: View {
                 .font(.subheadline)
                 .foregroundColor(.secondary)
         }
-        //.border(Color.gray, width: 1)
         .padding(.vertical, 0)
     }
 }

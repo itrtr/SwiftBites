@@ -24,7 +24,6 @@ struct CategoriesView: View {
     
     var body: some View {
         NavigationStack {
-            //Text("\(categories.count)")
             // We should show the search bar always unless the main category is empty
             if !categories.isEmpty {
                 SearchView(searchedText: $searchText, placeholder: "Search Categories...")
@@ -56,25 +55,7 @@ struct CategoriesView: View {
                         }
                     }
                 }
-                
-                Spacer()
-                Button(action: clearCategories) {
-                    Text("Clear All Categories")
-                }
             }
-        }
-    }
-    
-    // TODO:: Remove
-    private func clearCategories() {
-        for category in categories {
-            modelContext.delete(category)
-        }
-        
-        do {
-            try modelContext.save()
-        } catch {
-            print("Error clearing notes: \(error)")
         }
     }
 }
